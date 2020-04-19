@@ -13,7 +13,8 @@ router.register(r'users', views.UserViewSet)
 router.register(r'profiles', views.ProfileViewSet)
 router.register(r'notificationtypes', views.NotificationTypeViewSet)
 router.register(r'notifications', views.NotificationViewSet)
-
+router.register(r'questions', views.QuestionViewSet)
+router.register(r'answerquestions', views.AnswerQuestionsViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

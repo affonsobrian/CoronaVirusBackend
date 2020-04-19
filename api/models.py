@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from datetime import datetime
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     address = models.TextField(max_length=255, blank=False, null=True)
     coordinate_x = models.FloatField(null=True);
     coordinate_y = models.FloatField(null=True);
@@ -38,3 +38,35 @@ class Notification(models.Model):
     
     def __repr__(self):
         return self.message
+
+class Question(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.title
+
+    def __repr__(self):
+        return self.title
+
+class Answer(models.Model):
+    description = models.CharField(max_length=1000)
+    question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
+    is_correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.description
+
+    def __repr__(self):
+        return self.description
+
+class AnsweredQuestions(models.Model):
+    question = models.ForeignKey(Question, related_name='answeredquestions', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='answeredquestions', on_delete=models.CASCADE)
+    is_correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"user: {self.user}, question: {self.question}"
+
+    def __repr__(self):
+        return f"user: {self.user}, question: {self.question}"
