@@ -68,9 +68,10 @@ class NotificationSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class AnswerIdDescriptionOnlySerializer(serializers.ModelSerializer):
+    value = serializers.IntegerField(required=True, write_only=True)
     class Meta:
         model = Answer
-        fields = ("id", "description")
+        fields = ("value",)
 
 
 class AnswerSerializer(serializers.ModelSerializer):
@@ -133,10 +134,13 @@ class AnswerQuestionSerializer(serializers.HyperlinkedModelSerializer):
         question = validated_data.get("question")
         answers = validated_data.get("answers")
         user = self.context['request'].user
+        # Get answers ids
+        answers = [list(a.values())[0] for a in answers]
         
         # Check if it is correct
-        correctAnswers = set(list(question.answers.filter(is_correct=True)))
-        is_correct = answers == correctAnswers
+        correctAnswers = question.answers.filter(is_correct=True).values_list("id", flat=True)
+
+        is_correct = set(answers) == set(correctAnswers)
 
         # Give points
         if is_correct:
