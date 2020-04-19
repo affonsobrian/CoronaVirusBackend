@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from hello.models import Profile
+from hello.models import Profile, Notification, NotificationType
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -42,3 +42,12 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
         attrs['user'] = user
         return attrs
 
+class NotificationTypeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = NotificationType
+        fields = "__all__"
+
+class NotificationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Notification
+        fields = "__all__"
