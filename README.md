@@ -1,4 +1,4 @@
-# CoronaVirusBackend
+# CoronaVirusBackend (ALPHA)
 ## Aplicação em Python para servir ao aplicativo do Corona Virus
 
 ## Onde acessar a API?
@@ -35,50 +35,52 @@ O arquivo que não necessita de autenticação realiza as tarefas descritas no p
 
 O segundo arquivo por sua vez permite a utilização da API em si, entretanto precisamos configura-lo no postman. Para isso siga o passo a passo a seguir.
 
-## 1 - Abra o Postman e clique em `import` no canto superior esquerdo.
+### 1 - Abra o Postman e clique em `import` no canto superior esquerdo.
 
 
 <img src="docs/imgs/1.png" width="65%" height="65%"> 
 
 
-## 2 - Selecione o arquivo `Covid-Python-Logado.postman_collection.json`
+### 2 - Selecione o arquivo `Covid-Python-Logado.postman_collection.json`
 <img src="docs/imgs/2.png" width="65%" height="65%"> 
 
 
-## - 3 Após importar ele aparecerá no canto esquerdo
+### 3 - Após importar ele aparecerá no canto esquerdo
 
 
 <img src="docs/imgs/4.png" width="65%" height="65%"> 
 
 
-## - 4 Clique com o botão direito sobre a collection e em seguida `editar`
+### 4 - Clique com o botão direito sobre a collection e em seguida `editar`
 
 <img src="docs/imgs/6.png" width="65%" height="65%"> 
 
 
-## - Na aba de autorização selecione o tipo `Bearer Token` e cole o token que pegou, em seguida salve
+### 5 - Na aba de autorização selecione o tipo `Bearer Token` e cole o token que pegou, em seguida salve
 endpoint: https://coronasavior.herokuapp.com/api/token/
 
 
 <img src="docs/imgs/8.png" width="65%" height="65%"> 
 
 
-## - Selecione a engrenagem no canto superior direito
+### 6 - Selecione a engrenagem no canto superior direito
 
 
 <img src="docs/imgs/9.png" width="65%" height="65%"> 
 
 
-## Clique em `add`
+### 7 - Clique em `add`
 
 <img src="docs/imgs/10.png" width="65%" height="65%"> 
 
 
-## Adicione a varariavel `address` e o valor `https://coronasavior.herokuapp.com/`
+### 8 - Adicione a varariavel `address` e o valor `https://coronasavior.herokuapp.com/`
 
 <img src="docs/imgs/11.png" width="65%" height="65%"> 
 
-## Agora é só usar os endpoints já configurados!
+###  Agora é só usar os endpoints já configurados!
 Obs.: Caso não saiba o que enviar nos POSTs, pode enviar vazio que a API irá retornar os campos que devem ser informados!
 
 O token tem um tempo de duração curto por questões de segurança 😜, caso ele expire você não conseguirá fazer requisições, será necessários utilizar novamente o endpoint para pegar um novo token. No futuro iremos adicionar um Script para que o postman pegue automaticamente um token novo a cada requisição! 😄 
+
+Essa é a primeira documentação do projeto, iremos melhora-la com o tempo, caso encontre algum problema ou falta de documentação sobre algum assunto, por favor criei uma `Issue` que iremos resolver o mais breve possível!
