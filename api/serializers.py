@@ -44,12 +44,12 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
         # Check if the user sent a location
         if not (x or y) and not address:
             raise serializers.ValidationError({"address": "You must pass X and Y positions or the address"})
-        
+
         # Check if user has a profile already
         search = Profile.objects.filter(user=user)
         if search.exists():
             raise serializers.ValidationError({"user": "A user can have only one profile."})
-        
+
         # Insert user in the attributes
         attrs['user'] = user
         return attrs
@@ -67,11 +67,8 @@ class NotificationSerializer(serializers.HyperlinkedModelSerializer):
         fields = "__all__"
 
 
-class AnswerIdDescriptionOnlySerializer(serializers.ModelSerializer):
-    value = serializers.IntegerField(required=True, write_only=True)
-    class Meta:
-        model = Answer
-        fields = ("value",)
+class AnswerIdDescriptionOnlySerializer(serializers.Serializer):
+    id = serializers.IntegerField(required=True, write_only=True)
 
 
 class AnswerSerializer(serializers.ModelSerializer):
@@ -80,8 +77,14 @@ class AnswerSerializer(serializers.ModelSerializer):
         fields = ("id", "description", "is_correct")
 
 
+class AnswerQuestionViewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = ("id", "description")
+
+
 class QuestionSerializer(serializers.HyperlinkedModelSerializer):
-    answers = AnswerIdDescriptionOnlySerializer(many=True, read_only=True)
+    answers = AnswerQuestionViewSerializer(many=True, read_only=True)
     is_answered = serializers.SerializerMethodField()
 
     def get_is_answered(self, obj):
@@ -102,7 +105,7 @@ class AnsweredQuestionsSerializer(serializers.HyperlinkedModelSerializer):
         answers = obj.question.answers.filter(is_correct=True)
         serializer = AnswerSerializer(answers, many=True)
         return serializer.data
-    
+
     class Meta:
         model = AnsweredQuestions
         fields = ("url", "question", "correct_answers")
@@ -114,11 +117,10 @@ class AnswerQuestionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AnsweredQuestions
         fields = ("url", "question", "answers")
-    
+
     def validate(self, attrs):
         # Calls super validate method
         attrs = super(AnswerQuestionSerializer, self).validate(attrs)
-
         # Get info
         user = self.context['request'].user
         question = attrs.get("question")
@@ -134,9 +136,10 @@ class AnswerQuestionSerializer(serializers.HyperlinkedModelSerializer):
         question = validated_data.get("question")
         answers = validated_data.get("answers")
         user = self.context['request'].user
+
         # Get answers ids
         answers = [list(a.values())[0] for a in answers]
-        
+
         # Check if it is correct
         correctAnswers = question.answers.filter(is_correct=True).values_list("id", flat=True)
 
@@ -150,3 +153,4 @@ class AnswerQuestionSerializer(serializers.HyperlinkedModelSerializer):
         instance = AnsweredQuestions.objects.create(user=user, question=question, is_correct=is_correct)
         user.profile.save()
         return instance
+
