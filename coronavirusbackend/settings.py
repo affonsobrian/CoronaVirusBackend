@@ -63,6 +63,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1200),
+}
+
 ROOT_URLCONF = "coronavirusbackend.urls"
 
 TEMPLATES = [
