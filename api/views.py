@@ -53,6 +53,9 @@ class QuestionViewSet(viewsets.ModelViewSet):
     filterset_fields = "__all__"
     ordering_fields = "__all__"
 
+    def get_queryset(self):
+        queryset = super(QuestionViewSet, self).get_queryset()
+        return queryset.exclude(answeredquestions__user=self.request.user)
 
 class AnswerQuestionsViewSet(viewsets.ModelViewSet):
     queryset = AnsweredQuestions.objects.all()
