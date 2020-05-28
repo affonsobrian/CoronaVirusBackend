@@ -2,9 +2,23 @@ from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from api.permissions.permissions import IsAuthenticatedOrWriteOnly, IsAdminOrReadOnly
-from api.serializers import (UserSerializer, ProfileSerializer, NotificationTypeSerializer, 
-NotificationSerializer, AnsweredQuestions, QuestionSerializer, AnswerQuestionSerializer, AnsweredQuestionsSerializer)
-from api.models import Profile, Notification, NotificationType, Question, AnsweredQuestions
+from api.serializers import (
+    UserSerializer,
+    ProfileSerializer,
+    NotificationTypeSerializer,
+    NotificationSerializer,
+    AnsweredQuestions,
+    QuestionSerializer,
+    AnswerQuestionSerializer,
+    AnsweredQuestionsSerializer,
+)
+from api.models import (
+    Profile,
+    Notification,
+    NotificationType,
+    Question,
+    AnsweredQuestions,
+)
 from django_filters.rest_framework import DjangoFilterBackend, OrderingFilter
 
 
@@ -56,6 +70,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = super(QuestionViewSet, self).get_queryset()
         return queryset.exclude(answeredquestions__user=self.request.user)
+
 
 class AnswerQuestionsViewSet(viewsets.ModelViewSet):
     queryset = AnsweredQuestions.objects.all()
