@@ -38,7 +38,6 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
         model = Profile
         fields = "__all__"
         read_only_fields = ("points", "user")
-        teste = 123
 
     def validate(self, attrs):
         attrs = super(ProfileSerializer, self).validate(attrs)
