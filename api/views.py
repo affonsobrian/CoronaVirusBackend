@@ -11,6 +11,7 @@ from api.serializers import (
     QuestionSerializer,
     AnswerQuestionSerializer,
     AnsweredQuestionsSerializer,
+    RankSerializerViewSet,
 )
 from api.models import (
     Profile,
@@ -83,3 +84,12 @@ class AnswerQuestionsViewSet(viewsets.ModelViewSet):
         if self.request.method == "GET":
             return AnsweredQuestionsSerializer
         return AnswerQuestionSerializer
+
+
+class RankingViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all().order_by("-points")
+    serializer_class = RankSerializerViewSet
+    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    filterset_fields = "__all__"
+    ordering_fields = "__all__"
+

@@ -15,6 +15,7 @@ router.register(r"notificationtypes", views.NotificationTypeViewSet)
 router.register(r"notifications", views.NotificationViewSet)
 router.register(r"questions", views.QuestionViewSet)
 router.register(r"answerquestions", views.AnswerQuestionsViewSet)
+router.register(r"ranking", views.RankingViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),

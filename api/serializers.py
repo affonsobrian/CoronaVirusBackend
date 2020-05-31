@@ -11,7 +11,6 @@ from api.models import (
 from api.constants.business import POINTS_PER_QUESTION
 from django.http import JsonResponse
 
-
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
@@ -172,3 +171,13 @@ class AnswerQuestionSerializer(serializers.HyperlinkedModelSerializer):
         )
         user.profile.save()
         return instance
+
+
+class RankSerializerViewSet(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(read_only=True, slug_field="username")
+
+    class Meta:
+        model = Profile
+        fields = ("user", "points")
+        read_only_fields = ("user", "points")
+
