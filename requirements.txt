@@ -22,7 +22,7 @@ prompt-toolkit==3.0.5
 psycopg2==2.8.5
 ptyprocess==0.6.0
 Pygments==2.6.1
-PyJWT==1.7.1
+PyJWT==2.4.0
 pytz==2019.3
 requests==2.23.0
 six==1.14.0
